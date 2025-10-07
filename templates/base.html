@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static tailwind_tags %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Krótki opis strony">
+        <meta name="keywords" content="django, tailwind, website">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% tailwind_css %}
+        <title>operaLab</title>
+    </head>
+    <body class="bg-gray-600">
+        {% block header %}
+            {# #}
+        {% endblock header %}
+        <div class="flex justify-center items-center min-w-screen min-h-screen">
+            {% block content %}
+                {# #}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
