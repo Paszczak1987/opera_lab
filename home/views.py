@@ -1,7 +1,9 @@
 
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .forms import CustomAuthenticationForm
 
 class HomeMainView(TemplateView):
@@ -17,5 +19,14 @@ class HomeMainView(TemplateView):
         form = CustomAuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('home:home')
+            return redirect('home:welcome')
         return render(request, self.template_name, {'form': form})
+    
+
+@method_decorator(login_required, name='dispatch')
+class WelcomeView(TemplateView):
+    template_name = 'home/welcome.html'
+
+def logout_view(request):
+    logout(request)
+    return redirect('home:home')
