@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@custom-variant hover (&:hover);
 /**
   * A catch-all path to Django template files, JavaScript, and Python files
   * that contain Tailwind CSS classes and will be scanned by Tailwind to generate the final CSS file.
@@ -13,13 +13,18 @@
   input,
   select,
   textarea {
-    /* @apply outline-none border border-gray-300 rounded-lg p-2 transition text-gray-200 duration-150 ease-in-out; */
-    @apply outline-none border rounded-lg p-2 transition duration-150 ease-in-out text-gray-200;
+    @apply outline-none border border-gray-600 p-1 transition duration-150 ease-in-out text-gray-200;
   }
 
   input:focus,
   select:focus,
   textarea:focus {
     @apply ring-2 ring-blue-400;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply py-2 px-3 hover:bg-gray-600 transition duration-200;
   }
 }

@@ -8,7 +8,10 @@ from .forms import CustomAuthenticationForm
 
 class HomeMainView(TemplateView):
     template_name = 'home/home.html'
-
+    
+class LoginView(TemplateView):
+    template_name = 'home/login.html'
+    
     def get(self, request, *args, **kwargs):
         """Renderuje formularz logowania."""
         form = CustomAuthenticationForm()
@@ -19,13 +22,12 @@ class HomeMainView(TemplateView):
         form = CustomAuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('home:welcome')
+            return redirect('home:logged_in')
         return render(request, self.template_name, {'form': form})
-    
 
 @method_decorator(login_required, name='dispatch')
 class WelcomeView(TemplateView):
-    template_name = 'home/welcome.html'
+    template_name = 'home/logged_in.html'
 
 def logout_view(request):
     logout(request)

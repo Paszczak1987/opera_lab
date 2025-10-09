@@ -1,0 +1,31 @@
+<nav class="bg-neutral-900 text-gray-100 flex justify-between items-center border-b border-gray-600">
+    <div class="flex">
+        <a href="{% url user.is_authenticated|yesno:'home:logged_in,home:home' %}"
+           class="nav-link py-2 w-28 text-center font-semibold">Opera lab</a>
+        {% if user.is_authenticated %}
+            {% if user.role == 'admin' %}
+                <a href="#" class="nav-link">Panel admina</a>
+                <a href="#" class="nav-link">Użytkownicy</a>
+            {% elif user.role == 'manager' %}
+                <a href="#" class="nav-link">Zlecenia</a>
+                <a href="#" class="nav-link">Raporty</a>
+            {% elif user.role == 'technician' %}
+                <a href="#" class="nav-link">Moje próbki</a>
+            {% elif user.role == 'client' %}
+                <a href="#" class="nav-link">Historia badań</a>
+            {% elif user.role == 'viewer' %}
+                <a href="#" class="nav-link">Statystyki</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="flex items-center">
+        {% if user.is_authenticated %}
+            <span class="mr-2 text-sm text-gray-400 py-2">{{ user.first_name }} {{ user.last_name }}</span>
+            <a href="{% url 'home:logout' %}"
+               class="nav-link text-blue-300 py-2 w-28 text-center">Wyloguj się</a>
+        {% else %}
+            <a href="{% url 'home:login' %}"
+               class="nav-link text-blue-300 py-2 w-28 text-center">Zaloguj się</a>
+        {% endif %}
+    </div>
+</nav>

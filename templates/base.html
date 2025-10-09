@@ -9,14 +9,24 @@
         {% tailwind_css %}
         <title>operaLab</title>
     </head>
-    <body class="bg-gray-600">
+    <body class="bg-neutral-800 text-gray-100 h-screen flex flex-col">
+        {% include "partials/_nav.html" %}
         {% block header %}
             {# #}
         {% endblock header %}
-        <div class="flex justify-center items-center min-w-screen min-h-screen">
-            {% block content %}
-                {# #}
-            {% endblock content %}
+        <div class="flex w-full flex-1">
+            {% if user.is_authenticated %}
+                <aside class="w-28 bg-neutral-900 p-2 flex-shrink-0 border-r border-gray-600">
+                    {% block aside %}
+                        {# #}
+                    {% endblock aside %}
+                </aside>
+            {% endif %}
+            <main class="flex flex-1 justify-center items-start p-8 overflow-y-auto">
+                {% block content %}
+                    {# #}
+                {% endblock content %}
+            </main>
         </div>
     </body>
 </html>
