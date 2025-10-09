@@ -1,0 +1,26 @@
+{% extends "home/home_base.html" %}
+{% block home_content %}
+    <div class="bg-neutral-900 p-8 w-full max-w-sm border-b border-gray-600">
+        <h1 class="text-2xl font-semibold text-center text-gray-200 mb-5">Logowanie</h1>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="bg-red-100 text-red-600 px-3 py-2 text-sm">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <div>
+                <label for="{{ form.username.id_for_label }}"
+                       class="block text-sm text-gray-400">Nazwa użytkownika</label>
+                {{ form.username }}
+            </div>
+            <div>
+                <label for="{{ form.password.id_for_label }}"
+                       class="block text-sm text-gray-400">Hasło</label>
+                {{ form.password }}
+            </div>
+            <button type="submit"
+                    class="w-full mt-5 bg-blue-600 text-gray-200 py-2 hover:bg-blue-700 cursor-pointer transition">
+                Zaloguj się
+            </button>
+        </form>
+    </div>
+{% endblock home_content %}

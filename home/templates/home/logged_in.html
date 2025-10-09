@@ -1,11 +1,20 @@
 {% extends "home/home_base.html" %}
+{
+{% block aside %}
+    <ul>
+        <li>option</li>
+        <li>option</li>
+        <li>option</li>
+        <li>option</li>
+        <li>option</li>
+    </ul>
+{% endblock aside %}
+}
 {% block home_content %}
     <div class="bg-gray-700 rounded-2xl p-8 w-full max-w-sm text-center">
         <h1 class="text-2xl font-bold text-gray-200 mb-4">Witaj, {{ request.user.username }}!</h1>
         <p class="text-gray-400 mb-6">
             Twoja rola: <span class="font-semibold text-blue-300">{{ request.user.get_role_display }}</span>
         </p>
-        <a href="{% url 'home:logout' %}"
-           class="inline-block bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition">Wyloguj się</a>
     </div>
 {% endblock home_content %}
