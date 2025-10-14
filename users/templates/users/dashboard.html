@@ -1,0 +1,20 @@
+{% extends "users/dashboard_base.html" %}
+{% block dashboard_content %}
+    <div class="workspace-card">
+        <h1 class="text-2xl font-bold text-gray-100">
+            {{ dashboard_title }} <span class="text-lime-500 ital">{{ request.user.username }}</span>.
+        </h1>
+        {% if dashboard_message %}<p class="text-gray-400 ">{{ dashboard_message }}</p>{% endif %}
+        <p class="text-gray-300">
+            <span class="font-semibold text-gray-100">Rola:</span>
+            {{ request.user.get_role_display }}
+        </p>
+        <p class="text-gray-300">
+            <span class="font-semibold text-gray-100">Username:</span> {{ request.user.username }}
+        </p>
+        <p class="text-gray-300">
+            <span class="font-semibold text-gray-100">Imie i nazwisko:</span>
+            {{ request.user.first_name|default:"-" }} {{ request.user.last_name|default:"" }}
+        </p>
+    </div>
+{% endblock dashboard_content %}

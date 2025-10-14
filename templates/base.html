@@ -9,14 +9,14 @@
         {% tailwind_css %}
         <title>operaLab</title>
     </head>
-    <body class="bg-neutral-800 text-gray-100 h-screen flex flex-col">
+    <body class="bg-gradient-to-br from-teal-900 via-slate-800 to-fuchsia-950 to-90% text-gray-300 h-screen flex flex-col">
         {% include "partials/_nav.html" %}
         {% block header %}
             {# #}
         {% endblock header %}
         <div class="flex w-full flex-1">
-            {% if user.is_authenticated %}
-                <aside class="w-28 bg-neutral-900 p-2 flex-shrink-0 border-r border-gray-600">
+            {% if user.is_authenticated and user.role %}
+                <aside class="w-28 bg-neutral-900  flex-shrink-0 border-r border-gray-600">
                     {% block aside %}
                         {# #}
                     {% endblock aside %}

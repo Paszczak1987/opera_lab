@@ -29,6 +29,19 @@ class LoginView(TemplateView):
 class WelcomeView(TemplateView):
     template_name = 'home/logged_in.html'
 
+    def get(self, request, *args, **kwargs):
+        role_redirects = {
+            'admin': 'users:admin_dashboard',
+            'client': 'users:client_dashboard',
+            'manager': 'users:manager_dashboard',
+            'technician': 'users:technician_dashboard',
+            'viewer': 'users:viewer_dashboard',
+        }
+        target = role_redirects.get(getattr(request.user, 'role', None))
+        if target:
+            return redirect(target)
+        return super().get(request, *args, **kwargs)
+
 def logout_view(request):
     logout(request)
     return redirect('home:home')
