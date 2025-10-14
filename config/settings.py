@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/welcome/'
+LOGIN_REDIRECT_URL = '/logged_in/'
 LOGOUT_REDIRECT_URL = '/'
 
 

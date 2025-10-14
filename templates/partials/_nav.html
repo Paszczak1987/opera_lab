@@ -1,31 +1,33 @@
 <nav class="bg-neutral-900 text-gray-100 flex justify-between items-center border-b border-gray-600">
-    <div class="flex">
+    <div class="flex items-stretch">
         <a href="{% url user.is_authenticated|yesno:'home:logged_in,home:home' %}"
-           class="nav-link py-2 w-28 text-center font-semibold">Opera lab</a>
+           class="nav-link font-semibold w-28 text-center">Opera lab</a>
         {% if user.is_authenticated %}
-            {% if user.role == 'admin' %}
-                <a href="#" class="nav-link">Panel admina</a>
-                <a href="#" class="nav-link">Użytkownicy</a>
-            {% elif user.role == 'manager' %}
+            {% if user.role == 'technician' %}
+                <a href="#" class="nav-link">Laboratorium</a>
                 <a href="#" class="nav-link">Zlecenia</a>
-                <a href="#" class="nav-link">Raporty</a>
-            {% elif user.role == 'technician' %}
-                <a href="#" class="nav-link">Moje próbki</a>
+            {% elif user.role == 'manager' %}
+                <a href="#" class="nav-link">Laboratorium</a>
+                <a href="#" class="nav-link">Zlecenia</a>
             {% elif user.role == 'client' %}
-                <a href="#" class="nav-link">Historia badań</a>
-            {% elif user.role == 'viewer' %}
-                <a href="#" class="nav-link">Statystyki</a>
+                <a href="#" class="nav-link">Budowy</a>
+                <a href="#" class="nav-link">Zlecenia</a>
+            {% elif user.role == 'admin' or user.role == 'viewer' %}
+                <span class="nav-link pointer-events-none opacity-40" aria-hidden="true">&nbsp;</span>
+                <span class="nav-link pointer-events-none opacity-40" aria-hidden="true">&nbsp;</span>
             {% endif %}
         {% endif %}
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center gap-3">
         {% if user.is_authenticated %}
-            <span class="mr-2 text-sm text-gray-400 py-2">{{ user.first_name }} {{ user.last_name }}</span>
-            <a href="{% url 'home:logout' %}"
-               class="nav-link text-blue-300 py-2 w-28 text-center">Wyloguj się</a>
+            <a href="{% url 'users:profile_settings' %}"
+               class="nav-link text-gray-400">
+                {{ user.first_name|default:user.username }}
+                {% if user.last_name %}{{ user.last_name }}{% endif %}
+            </a>
+            <a href="{% url 'home:logout' %}" class="nav-link text-blue-300">Wyloguj sie</a>
         {% else %}
-            <a href="{% url 'home:login' %}"
-               class="nav-link text-blue-300 py-2 w-28 text-center">Zaloguj się</a>
+            <a href="{% url 'home:login' %}" class="nav-link text-blue-300">Zaloguj sie</a>
         {% endif %}
     </div>
 </nav>
