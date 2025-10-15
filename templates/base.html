@@ -9,20 +9,29 @@
         {% tailwind_css %}
         <title>operaLab</title>
     </head>
-    <body class="bg-gradient-to-br from-teal-900 via-slate-800 to-fuchsia-950 to-90% text-gray-300 h-screen flex flex-col">
+    <body class="bg-gradient-to-br from-teal-900 via-slate-800 to-neutral-800 to-90% text-gray-300 h-screen flex flex-col">
         {% include "partials/_nav.html" %}
         {% block header %}
             {# #}
         {% endblock header %}
         <div class="flex w-full flex-1">
-            {% if user.is_authenticated and user.role %}
-                <aside class="w-28 bg-neutral-900  flex-shrink-0 border-r border-gray-600">
+            {% if user.is_authenticated and nav_side_links %}
+                <aside class="w-32 bg-neutral-900 flex-shrink-0 border-r border-gray-600">
                     {% block aside %}
-                        {# #}
+                        {% include "partials/_sidebar.html" %}
                     {% endblock aside %}
                 </aside>
             {% endif %}
             <main class="flex flex-1 justify-center items-start p-8 overflow-y-auto">
+                {% if messages %}
+                    <div class="fixed top-20 right-8 z-50 space-y-2 max-w-sm">
+                        {% for message in messages %}
+                            <div class="px-4 py-3 rounded border border-teal-400 bg-teal-900/60 text-teal-100 text-sm shadow-lg">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 {% block content %}
                     {# #}
                 {% endblock content %}

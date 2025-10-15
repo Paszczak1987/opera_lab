@@ -2,20 +2,13 @@
     <div class="flex items-stretch">
         <a href="{% url user.is_authenticated|yesno:'home:logged_in,home:home' %}"
            class="nav-link font-semibold w-28 text-center">Opera lab</a>
-        {% if user.is_authenticated %}
-            {% if user.role == 'technician' %}
-                <a href="#" class="nav-link">Laboratorium</a>
-                <a href="#" class="nav-link">Zlecenia</a>
-            {% elif user.role == 'manager' %}
-                <a href="#" class="nav-link">Laboratorium</a>
-                <a href="#" class="nav-link">Zlecenia</a>
-            {% elif user.role == 'client' %}
-                <a href="#" class="nav-link">Budowy</a>
-                <a href="#" class="nav-link">Zlecenia</a>
-            {% elif user.role == 'admin' or user.role == 'viewer' %}
-                <span class="nav-link pointer-events-none opacity-40" aria-hidden="true">&nbsp;</span>
-                <span class="nav-link pointer-events-none opacity-40" aria-hidden="true">&nbsp;</span>
-            {% endif %}
+        {% if nav_top_links %}
+            {% for item in nav_top_links %}
+                <a href="{{ item.url }}"
+                   class="nav-link {% if item.active %}bg-slate-800 text-teal-300{% else %}text-gray-300 hover:text-white{% endif %}">
+                    {{ item.label }}
+                </a>
+            {% endfor %}
         {% endif %}
     </div>
     <div class="flex items-center gap-3">

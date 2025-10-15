@@ -1,0 +1,54 @@
+{% extends "home/home_base.html" %}
+{% block home_content %}
+    <!-- Main container -->
+    <div class="workspace-table justify-center items-center p-3">
+        {% if worksites %}
+            <!--Table container-->
+            <div class="flex-1 flex-col w-full">
+                <!--Header-->
+                <div class="flex w-full border-b border-gray-600 bg-slate-800 text-teal-300 font-semibold py-1">
+                    <div class="flex-[2] p-1 flex items-center justify-center text-center">Nazwa</div>
+                    <div class="flex-[1] p-1 flex items-center justify-center text-center">Skrót</div>
+                    <div class="flex-[1] p-1 flex items-center justify-center text-center">Kod</div>
+                    <div class="flex-[1] p-1 flex items-center justify-center text-center">Adres biura</div>
+                    <div class="flex-[1] p-1 flex items-center justify-center text-center">Zamawiający</div>
+                </div>
+                <!--Rows-->
+                {% for worksite in worksites %}
+                    <div class="flex w-full border-b border-gray-600 text-sm">
+                        <div class="flex-[2] p-1 flex items-center justify-center text-center">{{ worksite.name }}</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.short_name }}</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.code }}</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.office_address }}</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">
+                            {% if worksite.clients.exists %}
+                                <ul class="space-y-1">
+                                    {% for client in worksite.clients.all %}<li class="text-center">{{ client.username }}</li>{% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-gray-500 text-xs text-center">Brak przypisanych klientów</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if is_paginated %}
+                <div class="flex justify-between items-center text-sm text-gray-400">
+                    <span>Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}</span>
+                    <div class="space-x-2">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}{% if scope %}&scope={{ scope }}{% endif %}"
+                               class="px-3 py-1 rounded border border-gray-600 hover:bg-slate-800">Poprzednia</a>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if scope %}&scope={{ scope }}{% endif %}"
+                               class="px-3 py-1 rounded border border-gray-600 hover:bg-slate-800">Następna</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>Brak budów do wyświetlenia.</p>
+        {% endif %}
+    </div>
+{% endblock home_content %}

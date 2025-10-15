@@ -45,7 +45,8 @@ INSTALLED_APPS = [
 
     # local apps
     'home.apps.HomeConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'worksites.apps.WorksitesConfig',
 ]
 if DEBUG:
     INSTALLED_APPS += ['django_browser_reload']
@@ -78,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'home.context_processors.navigation',
             ],
         },
     },

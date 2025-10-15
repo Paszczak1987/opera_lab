@@ -3,10 +3,7 @@
     {# #}
 {% endblock header %}
 {% block aside %}
-    <nav class="flex flex-col gap-2">
-        <a href="#" class="nav-link text-center" aria-hidden="true">option</a>
-        <a href="#" class="nav-link text-center" aria-hidden="true">option</a>
-    </nav>
+    {{ block.super }}
 {% endblock aside %}
 {% block content %}
     {% block dashboard_content %}
