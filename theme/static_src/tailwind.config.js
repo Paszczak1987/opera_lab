@@ -5,7 +5,14 @@ module.exports = {
     "../../templates/**/*.{html,js}",
     "../../home/templates/**/*.{html,js}",
     "../../users/templates/**/*.{html,js}",
+    "../../worksites/templates/**/*.{html,js}",
     "../../**/*.py"
+  ],
+  safelist: [
+    'flex-[1]',
+    'flex-[2]',
+    'flex-[3]',
+    'flex-[4]',
   ],
   theme: {
     extend: {},
