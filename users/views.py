@@ -46,7 +46,7 @@ class ClientDashboardView(RoleDashboardView):
     required_role = "client"
     dashboard_title = "Panel klienta"
     dashboard_message = (
-        "Twórz i wysyłaj zlecenia. Sprawdzaj postep zlecen, raporty oraz komunikaty dotyczace realizacji."
+        "Twórz i wysyłaj zlecenia. Sprawdzaj postep zlecen, otrzymuj raporty oraz komunikaty dotyczace realizacji."
     )
 
 

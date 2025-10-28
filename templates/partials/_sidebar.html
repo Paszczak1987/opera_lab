@@ -2,12 +2,13 @@
     <nav class="flex flex-col py-6 text-sm items-stretch">
         {% for item in nav_side_links %}
             {% if item.disabled %}
-                <span class="px-2 py-2 text-gray-600 cursor-not-allowed">{{ item.label }}</span>
+                <span class="nav-link nav-link--block nav-link--disabled">{{ item.label }}</span>
             {% else %}
-                <a href="{{ item.url|default:'#' }}" class="nav-link w-full">{{ item.label }}</a>
+                <a href="{{ item.url|default:'#' }}"
+                   class="nav-link nav-link--block {% if item.active %}nav-link--active{% endif %}">{{ item.label }}</a>
             {% endif %}
         {% endfor %}
     </nav>
 {% else %}
-    <div class="p-4 text-xs text-gray-500">Brak dostępnych akcji.</div>
+    <div class="p-4 text-xs text-gray-500">Brak dost�tpnych akcji.</div>
 {% endif %}

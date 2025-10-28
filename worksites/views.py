@@ -22,11 +22,22 @@ class WorksiteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         response = super().form_valid(form)
         if self.request.user.role == "client":
             self.object.clients.add(self.request.user)
-        messages.success(self.request, "Budowa została pomyślnie dodana.")
+        messages.success(self.request, "Budowa zostala pomyslnie dodana.")
         return response
 
     def test_func(self):
         return self.request.user.role in {"admin", "client"}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "dashboard_title": "Budowy",
+                "dashboard_message": "Dodaj nowe budowy albo edytuj istniejace wpisy.",
+                "section": "worksites",
+            }
+        )
+        return context
 
     def get_success_url(self):
         scope = "mine" if self.request.user.role == "client" else "all"
@@ -61,4 +72,8 @@ class WorksiteListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["scope"] = self.get_scope()
         context["section"] = "worksites"
+        context.setdefault("dashboard_title", "Budowy")
+        context.setdefault(
+            "dashboard_message", "Przegladaj i filtruj budowy dostepne w systemie."
+        )
         return context
