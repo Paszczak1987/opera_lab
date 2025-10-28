@@ -1,9 +1,24 @@
 NAVIGATION = {
     "admin": {
         "top": [
-            {"key": "worksites", "label": "Budowy"},
-            {"key": "orders", "label": "Zlecenia"},
-            {"key": "users", "label": "Uzytkownicy"},
+            {
+                "key": "worksites",
+                "label": "Budowy",
+                "url_name": "users:admin_dashboard",
+                "params": {"section": "worksites"},
+            },
+            {
+                "key": "orders",
+                "label": "Zlecenia",
+                "url_name": "users:admin_dashboard",
+                "params": {"section": "orders"},
+            },
+            {
+                "key": "users",
+                "label": "Uzytkownicy",
+                "url_name": "users:admin_dashboard",
+                "params": {"section": "users"},
+            },
         ],
         "side": {
             "worksites": [
@@ -31,8 +46,18 @@ NAVIGATION = {
     },
     "client": {
         "top": [
-            {"key": "worksites", "label": "Budowy"},
-            {"key": "orders", "label": "Zlecenia"},
+            {
+                "key": "worksites",
+                "label": "Budowy",
+                "url_name": "users:client_dashboard",
+                "params": {"section": "worksites"},
+            },
+            {
+                "key": "orders",
+                "label": "Zlecenia",
+                "url_name": "users:client_dashboard",
+                "params": {"section": "orders"},
+            },
         ],
         "side": {
             "worksites": [
