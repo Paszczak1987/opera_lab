@@ -1,0 +1,54 @@
+{% extends "users/dashboard_base.html" %}
+{% block dashboard_content %}
+    <div class="workspace-card w-full space-y-6">
+        <header class="space-y-1">
+            <h1 class="text-2xl font-semibold text-gray-100">Laboratoria</h1>
+            <p class="text-sm text-gray-400">Przeglad dostepnych laboratoriow wraz z przypisanym personelem.</p>
+        </header>
+        <div class="workspace-table justify-center items-center">
+            {% if laboratories %}
+                <div class="flex-1 flex-col w-full">
+                    <div class="flex w-full border-b border-gray-600 bg-slate-800 text-teal-300 font-semibold py-1">
+                        <div class="flex-[2] p-1 flex items-center justify-center text-center">Nazwa</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">Skrot</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">Kod</div>
+                        <div class="flex-[2] p-1 flex items-center justify-center text-center">Adres</div>
+                        <div class="flex-[2] p-1 flex items-center justify-center text-center">Kierownik</div>
+                    </div>
+                    {% for laboratory in laboratories %}
+                        <div class="flex w-full border-b border-gray-600 text-sm">
+                            <div class="flex-[2] p-1 flex items-center justify-center text-center">{{ laboratory.name }}</div>
+                            <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.short_name }}</div>
+                            <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.code }}</div>
+                            <div class="flex-[2] p-1 flex items-center justify-center text-center">{{ laboratory.address }}</div>
+                            <div class="flex-[2] p-1 flex items-center justify-center">
+                                {% with managers=laboratory.managers.all %}
+                                    {% if managers %}
+                                        <ul class="space-y-1">
+                                            {% for manager in managers %}<li class="text-center">{{ manager.first_name }} {{ manager.last_name }}</li>{% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p class="text-gray-500 text-xs text-center">Brak kierownikow</p>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if is_paginated %}
+                    <div class="flex justify-between items-center text-sm text-gray-400 pt-3">
+                        <span>Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}</span>
+                        <div class="btn-outline-group">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="btn-outline">Poprzednia</a>
+                            {% endif %}
+                            {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="btn-outline">Nastepna</a>{% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <p class="text-sm text-gray-400">Brak laboratoriow do wyswietlenia.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock dashboard_content %}

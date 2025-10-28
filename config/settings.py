@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
     'worksites.apps.WorksitesConfig',
+    'labsites.apps.LabsitesConfig',
 ]
 if DEBUG:
     INSTALLED_APPS += ['django_browser_reload']

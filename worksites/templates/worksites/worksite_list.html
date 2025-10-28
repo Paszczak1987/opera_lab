@@ -11,18 +11,6 @@
                 {% endif %}
             </p>
         </header>
-
-        <div class="btn-outline-group">
-            <a href="?scope=mine{% if section %}&section={{ section }}{% endif %}"
-               class="btn-outline {% if scope == 'mine' %}btn-outline--active{% endif %}">
-                Moje budowy
-            </a>
-            <a href="?scope=all{% if section %}&section={{ section }}{% endif %}"
-               class="btn-outline {% if scope == 'all' %}btn-outline--active{% endif %}">
-                Wszystkie budowy
-            </a>
-        </div>
-
         <div class="workspace-table justify-center items-center">
             {% if worksites %}
                 <div class="flex-1 flex-col w-full">
@@ -43,7 +31,7 @@
                                 {% if worksite.clients.exists %}
                                     <ul class="space-y-1">
                                         {% for client in worksite.clients.all %}
-                                            <li class="text-center">{{ client.username }}</li>
+                                            <li class="text-center">{{ client.first_name }} {{ client.last_name }}</li>
                                         {% endfor %}
                                     </ul>
                                 {% else %}
