@@ -5,6 +5,7 @@ module.exports = {
     "../../templates/**/*.{html,js}",
     "../../home/templates/**/*.{html,js}",
     "../../users/templates/**/*.{html,js}",
+    "../../labsites/templates/**/*.{html,js}",
     "../../worksites/templates/**/*.{html,js}",
     "../../**/*.py"
   ],

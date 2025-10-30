@@ -17,7 +17,12 @@
                     </div>
                     {% for laboratory in laboratories %}
                         <div class="flex w-full border-b border-gray-600 text-sm">
-                            <div class="flex-[2] p-1 flex items-center justify-center text-center">{{ laboratory.name }}</div>
+                            <div class="flex-[2] p-1 flex items-center justify-center text-center">
+                                <a href="{% url 'labsites:detail' laboratory.pk %}?section=laboratories"
+                                   class="text-teal-300 hover:text-teal-100 no-underline decoration-teal-500">
+                                    {{ laboratory.name }}
+                                </a>
+                            </div>
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.short_name }}</div>
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.code }}</div>
                             <div class="flex-[2] p-1 flex items-center justify-center text-center">{{ laboratory.address }}</div>

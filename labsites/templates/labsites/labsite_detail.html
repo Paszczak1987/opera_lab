@@ -1,0 +1,56 @@
+{% extends "users/dashboard_base.html" %}
+{% block dashboard_content %}
+    <div class="workspace-card w-full space-y-6">
+        <header class="space-y-1">
+            <h1 class="text-2xl font-semibold text-gray-100">{{ laboratory.name }}</h1>
+            <p class="text-sm text-gray-400">Szczgółowy widok {{ laboratory.short_name }}</p>
+        </header>
+        <section class="text-gray-200">
+            <p class="text-gray-400 text-md font-semibold">
+                Nazwa skrotowa: <span class="text-gray-200">{{ laboratory.short_name }}</span>
+            </p>
+            <p class="text-gray-400 text-md font-semibold">
+                Kod laboratorium: <span class="text-gray-200">{{ laboratory.code }}</span>
+            </p>
+            <p class="text-gray-400 text-md font-semibold">
+                Adres: <span class="text-gray-200">{{ laboratory.address }}</span>
+            </p>
+        </section>
+        <section class="workspace-table space-y-4">
+            <div class="space-y-2">
+                <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Kierownicy:</p>
+                {% if assigned_managers %}
+                    <div class="flex flex-col">
+                        {% for manager in assigned_managers %}
+                            <div class="flex w-full px-5 py-1">
+                                <span class="flex-1 text-gray-200">{{ manager.first_name }} {{ manager.last_name }}</span>
+                                <span class="text-xs text-gray-500">{{ manager.email }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-xs text-gray-500">Brak przypisanych kierownikow.</p>
+                {% endif %}
+            </div>
+            <div class="space-y-2">
+                <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Technicy:</p>
+                {% if assigned_technicians %}
+                    <ul class="flex flex-col">
+                        {% for technician in assigned_technicians %}
+                            <li class="flex w-full px-5 py-1">
+                                <span class="flex-1 text-gray-200">{{ technician.first_name }} {{ technician.last_name }}</span>
+                                <span class="text-xs text-gray-500">{{ technician.email }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-xs text-gray-500">Brak przypisanych technikow.</p>
+                {% endif %}
+            </div>
+        </section>
+        <div class="flex justify-end">
+            <a href="{% url 'labsites:list' %}?section=laboratories"
+               class="btn-outline">Powrot do listy</a>
+        </div>
+    </div>
+{% endblock dashboard_content %}

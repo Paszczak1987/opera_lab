@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, DetailView, ListView
 
 from .forms import LabSiteForm
 from .models import LabSite
@@ -61,3 +61,24 @@ class LabSiteCreateView(LoginRequiredMixin, AdminOnlyMixin, CreateView):
     def get_success_url(self):
         base = super().get_success_url()
         return f"{base}?section=laboratories"
+
+
+class LabSiteDetailView(LoginRequiredMixin, AdminOnlyMixin, DetailView):
+    model = LabSite
+    template_name = "labsites/labsite_detail.html"
+    context_object_name = "laboratory"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        laboratory: LabSite = context["laboratory"]
+        context.update(
+            {
+                "section": "laboratories",
+                "dashboard_title": laboratory.name,
+                "dashboard_message": "Szczegoly laboratorium oraz przypisany personel.",
+                "assigned_managers": laboratory.managers.order_by("username").all(),
+                "assigned_technicians": laboratory.technicians.order_by("username").all(),
+                "assigned_personnel": laboratory.managers.count() + laboratory.technicians.count(),
+            }
+        )
+        return context

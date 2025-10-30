@@ -14,11 +14,6 @@ NAVIGATION = {
                 "params": {"section": "laboratories"},
             },
             {
-                "key": "cms",
-                "label": "Panel administratora",
-                "url_name": "admin:index",
-            },
-            {
                 "key": "orders",
                 "label": "Zlecenia",
                 "url_name": "users:admin_dashboard",
@@ -29,6 +24,11 @@ NAVIGATION = {
                 "label": "Uzytkownicy",
                 "url_name": "users:admin_dashboard",
                 "params": {"section": "users"},
+            },
+            {
+                "key": "cms",
+                "label": "CMS",
+                "url_name": "admin:index",
             },
         ],
         "side": {
