@@ -8,6 +8,12 @@ NAVIGATION = {
                 "params": {"section": "worksites"},
             },
             {
+                "key": "laboratories",
+                "label": "Laboratoria",
+                "url_name": "users:admin_dashboard",
+                "params": {"section": "laboratories"},
+            },
+            {
                 "key": "orders",
                 "label": "Zlecenia",
                 "url_name": "users:admin_dashboard",
@@ -18,6 +24,11 @@ NAVIGATION = {
                 "label": "Uzytkownicy",
                 "url_name": "users:admin_dashboard",
                 "params": {"section": "users"},
+            },
+            {
+                "key": "cms",
+                "label": "CMS",
+                "url_name": "admin:index",
             },
         ],
         "side": {
@@ -31,10 +42,26 @@ NAVIGATION = {
                 },
                 {
                     "key": "worksites_manage",
-                    "label": "Dodaj / Edytuj",
+                    "label": "Dodaj budowę",
                     "url_name": "worksites:create",
                     "section": "worksites",
                 },
+            ],
+            "laboratories": [
+                {
+                    "key": "labs_list",
+                    "label": "Lista laboratoriow",
+                    "url_name": "labsites:list",
+                    "section": "laboratories",
+                    "params": {"section": "laboratories"},
+                },
+                {
+                    "key": "labs_add",
+                    "label": "Dodaj laboratorium",
+                    "url_name": "labsites:create",
+                    "section": "laboratories",
+                    "params": {"section": "laboratories"},
+                }
             ],
             "orders": [
                 {"key": "orders_placeholder", "label": "Zlecenia", "url": "#", "disabled": True},
@@ -77,7 +104,7 @@ NAVIGATION = {
                 },
                 {
                     "key": "worksites_manage",
-                    "label": "Dodaj / Edytuj",
+                    "label": "Dodaj budowę",
                     "url_name": "worksites:create",
                     "section": "worksites",
                 },

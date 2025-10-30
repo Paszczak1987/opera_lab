@@ -59,4 +59,8 @@
   .btn-outline-group {
     @apply flex flex-wrap gap-2 text-sm;
   }
+
+  .btn-submit {
+    @apply px-4 py-2 bg-blue-600 text-gray-200 hover:bg-blue-700 cursor-pointer transition;
+  }
 }
