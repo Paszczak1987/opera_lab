@@ -1,47 +1,58 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
+from config.countries import DEFAULT_COUNTRY_CODE, country_choices
 from .models import Worksite
-
-
-# FIELD_CLASS = "w-full px-3 py-2 bg-neutral-900 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
 
 
 class WorksiteForm(forms.ModelForm):
     class Meta:
         model = Worksite
-        fields = ["name", "short_name", "code", "office_address", "clients"]
+        fields = ["name", "short_name", "code", "office_address", "country_code", "clients"]
         labels = {
-            'name': "Pełna nazwa budowy",
-            'short_name': "Skrócona nazwa",
-            'code': "Kod budowy",
-            'office_address': "Adres biura budowy",
-            'clients': "Zamawiający",
+            "name": "Pelna nazwa budowy",
+            "short_name": "Skrocona nazwa",
+            "code": "Kod budowy",
+            "office_address": "Adres biura budowy",
+            "country_code": "Kraj",
+            "clients": "Zamawiajacy",
         }
         widgets = {
-            # "name": forms.TextInput(attrs={"class": FIELD_CLASS, "placeholder": "Pełna nazwa budowy"}),
-            # "short_name": forms.TextInput(attrs={"class": FIELD_CLASS, "placeholder": "Skrócona nazwa"}),
-            # "code": forms.TextInput(attrs={"class": FIELD_CLASS, "placeholder": "Kod budowy"}),
-            # "office_address": forms.TextInput(attrs={"class": FIELD_CLASS, "placeholder": "Adres biura budowy"}),
-            # "clients": forms.SelectMultiple(attrs={"class": FIELD_CLASS}),
-            "name": forms.TextInput(attrs={"placeholder": "Pełna nazwa budowy"}),
-            "short_name": forms.TextInput(attrs={"placeholder": "Skrócona nazwa"}),
+            "name": forms.TextInput(attrs={"placeholder": "Pelna nazwa budowy"}),
+            "short_name": forms.TextInput(attrs={"placeholder": "Skrocona nazwa"}),
             "code": forms.TextInput(attrs={"placeholder": "Kod budowy"}),
             "office_address": forms.TextInput(attrs={"placeholder": "Adres biura budowy"}),
-            "clients": forms.SelectMultiple(attrs={}),
+            "country_code": forms.Select(),
+            "clients": forms.SelectMultiple(),
         }
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
         user_model = get_user_model()
+
+        self.fields["country_code"].choices = country_choices()
+        self.fields["country_code"].initial = self.instance.country_code or DEFAULT_COUNTRY_CODE
+        self.fields["country_code"].help_text = "Wybierz kraj, w ktorym znajduje sie budowa."
+        self.fields["country_code"].widget.attrs.update(
+            {
+                "class": (
+                    "w-full bg-slate-900/70 border border-slate-600 rounded px-3 py-2 "
+                    "text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 "
+                    "focus:border-transparent"
+                )
+            }
+        )
+
         self.fields["clients"].queryset = user_model.objects.filter(role="client").order_by("username")
-        self.fields["clients"].help_text = "Wybierz klientów powiązanych z budową."
+        self.fields["clients"].required = False
+        self.fields["clients"].help_text = "Wybierz klientow powiazanych z budowa."
+
         if user and user.role == "client":
             self.fields["clients"].initial = [user]
             self.fields["clients"].widget = forms.MultipleHiddenInput()
-            self.fields["clients"].help_text = "Zostaniesz przypisany jako zamawiajcy tej budowy."
-        self.fields["clients"].required = False
+            self.fields["clients"].help_text = "Zostaniesz przypisany jako zamawiajacy tej budowy."
+
         if not isinstance(self.fields["clients"].widget, forms.MultipleHiddenInput):
             base_select_classes = (
                 "w-full bg-slate-900/70 border border-slate-600 rounded px-3 py-2 "

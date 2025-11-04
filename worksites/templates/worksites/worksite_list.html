@@ -19,6 +19,7 @@
                         <div class="flex-[1] p-1 flex items-center justify-center text-center">Skrot</div>
                         <div class="flex-[1] p-1 flex items-center justify-center text-center">Kod</div>
                         <div class="flex-[1] p-1 flex items-center justify-center text-center">Adres biura</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">Kraj</div>
                         <div class="flex-[1] p-1 flex items-center justify-center text-center">Zamawiajacy</div>
                     </div>
                     {% for worksite in worksites %}
@@ -27,6 +28,7 @@
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.short_name }}</div>
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.code }}</div>
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.office_address }}</div>
+                            <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ worksite.country_name }} ({{ worksite.country_code }})</div>
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">
                                 {% if worksite.clients.exists %}
                                     <ul class="space-y-1">

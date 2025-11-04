@@ -1,0 +1,50 @@
+<div class="flex flex-col gap-4 lg:flex-row" {% for attr, value in wrapper_attrs.items %} {{ attr }}="{{ value }}"{% endfor %}>
+    <div class="flex flex-1 flex-col gap-2">
+        <span class="text-xs font-semibold uppercase tracking-wide text-teal-300">
+            {{ titles.available }}
+        </span>
+        <select{% for attr, value in available_attrs.items %} {{ attr }}="{{ value }}"{% endfor %}>
+            {% for option in available_options %}
+                <option value="{{ option.id }}"
+                        class="{{ option.css_class }}{% if option.locked %} cursor-not-allowed{% endif %}"
+                        data-assigned-anywhere="{{ option.assigned_elsewhere|yesno:'true,false' }}"
+                        data-locked="{{ option.locked|yesno:'true,false' }}"
+                        data-original-locked="{{ option.original_locked|yesno:'true,false' }}"
+                        {% if option.locked %}disabled{% endif %}>
+                    {{ option.label }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="flex items-center justify-center gap-3 lg:flex-col lg:gap-4">
+        <button type="button"
+                id="{{ buttons.add.id }}"
+                data-action="add"
+                class="inline-flex items-center justify-center rounded bg-teal-600 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-50">
+            {{ buttons.add.label }}
+        </button>
+        <button type="button"
+                id="{{ buttons.remove.id }}"
+                data-action="remove"
+                class="inline-flex items-center justify-center rounded bg-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-600 disabled:cursor-not-allowed disabled:opacity-50">
+            {{ buttons.remove.label }}
+        </button>
+    </div>
+    <div class="flex flex-1 flex-col gap-2">
+        <span class="text-xs font-semibold uppercase tracking-wide text-teal-300">
+            {{ titles.selected }}
+        </span>
+        <select name="{{ widget.name }}"{% for attr, value in widget.attrs.items %} {{ attr }}="{{ value }}"{% endfor %}>
+            {% for option in selected_options %}
+                <option value="{{ option.id }}"
+                        class="{{ option.css_class }}"
+                        data-assigned-anywhere="{{ option.assigned_elsewhere|yesno:'true,false' }}"
+                        data-locked="{{ option.locked|yesno:'true,false' }}"
+                        data-original-locked="{{ option.original_locked|yesno:'true,false' }}"
+                        selected>
+                    {{ option.label }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

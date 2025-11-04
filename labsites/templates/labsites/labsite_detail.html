@@ -1,56 +1,96 @@
 {% extends "users/dashboard_base.html" %}
 {% block dashboard_content %}
-    <div class="workspace-card w-full space-y-6">
-        <header class="space-y-1">
-            <h1 class="text-2xl font-semibold text-gray-100">{{ laboratory.name }}</h1>
-            <p class="text-sm text-gray-400">Szczgółowy widok {{ laboratory.short_name }}</p>
-        </header>
-        <section class="text-gray-200">
-            <p class="text-gray-400 text-md font-semibold">
-                Nazwa skrotowa: <span class="text-gray-200">{{ laboratory.short_name }}</span>
-            </p>
-            <p class="text-gray-400 text-md font-semibold">
-                Kod laboratorium: <span class="text-gray-200">{{ laboratory.code }}</span>
-            </p>
-            <p class="text-gray-400 text-md font-semibold">
-                Adres: <span class="text-gray-200">{{ laboratory.address }}</span>
-            </p>
-        </section>
-        <section class="workspace-table space-y-4">
-            <div class="space-y-2">
-                <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Kierownicy:</p>
-                {% if assigned_managers %}
-                    <div class="flex flex-col">
-                        {% for manager in assigned_managers %}
-                            <div class="flex w-full px-5 py-1">
-                                <span class="flex-1 text-gray-200">{{ manager.first_name }} {{ manager.last_name }}</span>
-                                <span class="text-xs text-gray-500">{{ manager.email }}</span>
+    {% if laboratory %}
+        <div class="workspace-card w-full space-y-4">
+            <header class="space-y-4 pb-2 md:flex md:items-end md:justify-between border-b border-gray-600">
+                <div class="space-y-1">
+                    <h1 class="text-2xl font-semibold text-gray-100">{{ laboratory.name }}</h1>
+                </div>
+            </header>
+            <section class="text-md font-semibold">
+                <p class="text-gray-400">
+                    Nazwa skrotowa: <span class="text-gray-200">{{ laboratory.short_name }}</span>
+                </p>
+                <p class="text-gray-400">
+                    Kod laboratorium: <span class="text-gray-200">{{ laboratory.code }}</span>
+                </p>
+                <p class="text-gray-400">
+                    Adres: <span class="text-gray-200">{{ laboratory.address }}</span>
+                </p>
+                <p class="text-gray-400">
+                    Kraj: <span class="text-gray-200">{{ laboratory.country_name }} ({{ laboratory.country_code }})</span>
+                </p>
+            </section>
+            <section class="workspace-table">
+                <div>
+                    <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Kierownicy:</p>
+                    {% if assigned_managers %}
+                        <div class="flex flex-col">
+                            {% for manager in assigned_managers %}
+                                <div class="flex w-full pl-6 pr-2 py-1">
+                                    <span class="text-sm flex-1 text-gray-200">{{ manager.first_name }} {{ manager.last_name }}</span>
+                                    <span class="text-sm text-gray-500">{{ manager.email }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="flex w-full pl-6 pr-2 py-1">
+                            <span class="text-sm flex-1 text-gray-200">Brak przypisanych kierownikow.</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Technicy:</p>
+                    {% if assigned_technicians %}
+                        <div class="flex flex-col">
+                            {% for technician in assigned_technicians %}
+                                <div class="flex w-full pl-6 pr-2 py-1">
+                                    <span class="text-sm flex-1 text-gray-200">{{ technician.first_name }} {{ technician.last_name }}</span>
+                                    <span class="text-sm text-gray-500">{{ technician.email }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="flex w-full pl-6 pr-2 py-1">
+                            <span class="text-sm flex-1 text-gray-200">Brak przypisanych technikow.</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+            {% if request.user.role == "admin" %}
+                <div class="flex justify-end">
+                    <a href="{% url 'labsites:list' %}?section=laboratories"
+                       class="btn-outline">Powrot do listy</a>
+                </div>
+            {% endif %}
+            {% if laboratory_switch_form %}
+                <form method="post"
+                      class="flex flex-col gap-2 md:flex-row md:items-center md:gap-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="section" value="laboratory">
+                    <div class="flex flex-col gap-1">
+                        <label for="{{ laboratory_switch_form.laboratory.id_for_label }}"
+                               class="font-semibold text-gray-400">Wybierz aktywne laboratorium:</label>
+                        <div class="flex gap-2">
+                            {{ laboratory_switch_form.laboratory }}
+                            <button type="submit" class="btn-outline">Zmien</button>
+                        </div>
+                        {% if laboratory_switch_form.laboratory.errors %}
+                            <div class="text-xs text-rose-400">
+                                {% for error in laboratory_switch_form.laboratory.errors %}<p>{{ error }}</p>{% endfor %}
                             </div>
-                        {% endfor %}
+                        {% endif %}
                     </div>
-                {% else %}
-                    <p class="text-xs text-gray-500">Brak przypisanych kierownikow.</p>
-                {% endif %}
-            </div>
-            <div class="space-y-2">
-                <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Technicy:</p>
-                {% if assigned_technicians %}
-                    <ul class="flex flex-col">
-                        {% for technician in assigned_technicians %}
-                            <li class="flex w-full px-5 py-1">
-                                <span class="flex-1 text-gray-200">{{ technician.first_name }} {{ technician.last_name }}</span>
-                                <span class="text-xs text-gray-500">{{ technician.email }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-xs text-gray-500">Brak przypisanych technikow.</p>
-                {% endif %}
-            </div>
-        </section>
-        <div class="flex justify-end">
-            <a href="{% url 'labsites:list' %}?section=laboratories"
-               class="btn-outline">Powrot do listy</a>
+                </form>
+            {% endif %}
         </div>
-    </div>
+    {% else %}
+        <div class="workspace-card w-full space-y-4 text-gray-200">
+            <h1 class="text-2xl font-semibold text-gray-100">Laboratorium</h1>
+            <p class="text-sm text-gray-400">Nie masz przypisanego aktywnego laboratorium.</p>
+            {% if not has_managed_laboratories %}
+                <p class="text-sm text-gray-400">Skontaktuj sie z administratorem, aby przypisac laboratorium do Twojego konta.</p>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock dashboard_content %}

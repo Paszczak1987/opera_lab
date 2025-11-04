@@ -1,20 +1,48 @@
 {% extends "users/dashboard_base.html" %}
 {% block dashboard_content %}
-    <div class="workspace-card">
-        <h1 class="text-2xl font-bold text-gray-100">
-            {{ dashboard_title }} <span class="text-lime-500 ital">{{ request.user.username }}</span>.
-        </h1>
-        {% if dashboard_message %}<p class="text-gray-400 ">{{ dashboard_message }}</p>{% endif %}
-        <p class="text-gray-300">
-            <span class="font-semibold text-gray-100">Rola:</span>
-            {{ request.user.get_role_display }}
-        </p>
-        <p class="text-gray-300">
-            <span class="font-semibold text-gray-100">Username:</span> {{ request.user.username }}
-        </p>
-        <p class="text-gray-300">
-            <span class="font-semibold text-gray-100">Imie i nazwisko:</span>
-            {{ request.user.first_name|default:"-" }} {{ request.user.last_name|default:"" }}
-        </p>
+    <div class="workspace-card w-full space-y-4">
+        <header class="space-y-4 pb-2 md:flex md:items-end md:justify-between border-b border-gray-600">
+            <div class="space-y-1">
+                <h1 class="text-2xl font-semibold text-gray-100">{{ dashboard_title }}</h1>
+            </div>
+        </header>
+        <section class="text-md font-semibold">
+            <p class="text-gray-400">
+                Imie i nazwisko: <span class="text-gray-200">{{ request.user.first_name|default:"-" }} {{ request.user.last_name|default:"" }}</span>
+            </p>
+            <p class="text-gray-400">
+                Rola: <span class="text-gray-200">{{ request.user.get_role_display }}</span>
+            </p>
+            <p class="text-gray-400">
+                Login: <span class="text-gray-200">{{ request.user.username }}</span>
+            </p>
+        </section>
+        {% if request.user.role == "manager" %}
+            <section class="workspace-table space-y-3">
+                <div class="space-y-1">
+                    <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Aktywne laboratorium</p>
+                    {% if active_laboratory %}
+                        <div class="space-y-1">
+                            <div class="flex w-full pl-6 pr-2 py-1">
+                                <span class="text-sm flex-1 text-gray-200">{{ active_laboratory.name }} ({{ active_laboratory.code }})</span>
+                                <span class="text-sm text-gray-500">{{ active_laboratory.address }}</span>
+                            </div>
+                            <div class="flex w-full pl-6 pr-2">
+                                <span class="text-xs text-gray-400">Kraj: {{ active_laboratory.country_name }} ({{ active_laboratory.country_code }})</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="flex w-full pl-6 pr-2 py-2">
+                            <span class="text-sm text-gray-400">Nie wybrano aktywnego laboratorium.</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+            <div class="flex text-sm flex-wrap items-center gap-3 text-gray-400">
+                <span>Laboratoria pod opieka: {{ managed_laboratories|length }}</span>
+                <a href="{% url 'labsites:manager_active' %}?section=laboratory"
+                   class="btn-outline">Zarzadzaj</a>
+            </div>
+        {% endif %}
     </div>
 {% endblock dashboard_content %}
