@@ -1386,6 +1386,10 @@ select[data-role="selected"] option:checked {
   padding-top: 1rem;
 }
 
+.pt-8 {
+  padding-top: 2rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1449,10 +1453,6 @@ select[data-role="selected"] option:checked {
 
 .leading-snug {
   line-height: 1.375;
-}
-
-.tracking-wide {
-  letter-spacing: 0.025em;
 }
 
 .text-gray-100 {
@@ -1877,11 +1877,6 @@ select[data-role="selected"] option:checked {
 
 @custom-variant hover(&:hover);
 
-.hover\:bg-blue-500:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1));
-}
-
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1));
@@ -1932,18 +1927,9 @@ select[data-role="selected"] option:checked {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.focus\:ring-blue-400:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(96 165 250 / var(--tw-ring-opacity, 1));
-}
-
 .focus\:ring-teal-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(20 184 166 / var(--tw-ring-opacity, 1));
-}
-
-.focus\:ring-offset-0:focus {
-  --tw-ring-offset-width: 0px;
 }
 
 .disabled\:cursor-not-allowed:disabled {

@@ -1,23 +1,32 @@
 {% extends "home/home_base.html" %}
 {% block home_content %}
-    <div class="workspace-card max-w-sm mx-auto">
-        <h1 class="text-2xl font-semibold text-center text-gray-200">Logowanie</h1>
-        <form method="post" class="space-y-4">
-            {% csrf_token %}
-            {% if form.non_field_errors %}
-                <div class="bg-red-100 text-red-600 px-3 py-2 text-sm">{{ form.non_field_errors }}</div>
-            {% endif %}
-            <div>
-                <label for="{{ form.username.id_for_label }}"
-                       class="block text-sm text-gray-400">Nazwa użytkownika</label>
-                {{ form.username }}
+    <div class="workspace-card w-full max-w-sm mx-auto space-y-4">
+        <!-- Card Header -->
+        <header class="space-y-4 pb-2 md:flex md:items-end md:justify-between border-b border-gray-600">
+            <div class="space-y-1">
+                <h1 class="text-2xl font-semibold text-gray-100">Logowanie</h1>
+                <p class="text-sm text-gray-400">Wpisz swoje dane, aby sie zalogowac.</p>
             </div>
-            <div>
-                <label for="{{ form.password.id_for_label }}"
-                       class="block text-sm text-gray-400">Hasło</label>
-                {{ form.password }}
-            </div>
-            <button type="submit" class="btn-submit w-full">Zaloguj się</button>
-        </form>
+        </header>
+        <!-- Login form -->
+        <section>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="bg-red-100 text-red-600 px-3 py-2 text-sm">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="space-y-2">
+                    <label for="{{ form.username.id_for_label }}"
+                           class="block text-sm font-medium text-slate-200">Nazwa użytkownika</label>
+                    {{ form.username }}
+                </div>
+                <div class="space-y-2">
+                    <label for="{{ form.password.id_for_label }}"
+                           class="block text-sm font-medium text-gray-200">Hasło</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn-submit w-full">Zaloguj się</button>
+            </form>
+        </section>
     </div>
 {% endblock home_content %}

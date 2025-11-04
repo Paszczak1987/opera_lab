@@ -1,32 +1,14 @@
 {% extends "users/dashboard_base.html" %}
 {% block dashboard_content %}
-    <style>
-        select.custom-scrollbar {
-            background-color: #0f172a;
-            color: #e2e8f0;
-            scrollbar-width: thin;
-            scrollbar-color: #0f766e #1f2937;
-        }
-
-        select.custom-scrollbar::-webkit-scrollbar {
-            width: 0.5rem;
-        }
-
-        select.custom-scrollbar::-webkit-scrollbar-track {
-            background-color: #1f2937;
-            border-radius: 9999px;
-        }
-
-        select.custom-scrollbar::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #0f766e 0%, #0f172a 100%);
-            border-radius: 9999px;
-        }
-    </style>
-    <div class="workspace-card w-full max-w-2xl mx-auto space-y-6">
-        <header class="text-center space-y-1">
-            <h1 class="text-2xl font-semibold text-gray-100">Nowa budowa</h1>
-            <p class="text-sm text-gray-400">Uzupelnij formularz, aby dodac budowe do systemu.</p>
+    <div class="workspace-card w-full max-w-3xl mx-auto space-y-6">
+        <!-- Card Header -->
+        <header class="space-y-4 pb-2 md:flex md:items-end md:justify-between border-b border-gray-600">
+            <div class="space-y-1">
+                <h1 class="text-2xl font-semibold text-gray-100">Nowa budowa</h1>
+                <p class="text-sm text-gray-400">Uzupelnij formularz, aby dodac budowe do systemu.</p>
+            </div>
         </header>
+        <!-- Construction creation/edit form -->
         <form method="post" class="space-y-4">
             {% csrf_token %}
             {% if form.non_field_errors %}

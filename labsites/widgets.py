@@ -72,6 +72,9 @@ class DualListWidget(forms.Widget):
         context["wrapper_attrs"] = {"data-dual-list": self.prefix}
         return context
 
+    def value_from_datadict(self, data, files, name):
+        return data.getlist(name)
+
 
 class TechnicianDualListWidget(DualListWidget):
     """Dual-list widget configured for technicians."""
@@ -80,8 +83,8 @@ class TechnicianDualListWidget(DualListWidget):
         super().__init__(
             *args,
             prefix="technicians",
-            available_label="Dostepni technicy",
-            selected_label="Technicy w laboratorium",
+            available_label="Wybierz ostepnych techników",
+            selected_label="Technicy przypisani do nowego laboratorium",
             **kwargs,
         )
 
