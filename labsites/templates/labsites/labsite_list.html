@@ -13,6 +13,7 @@
                         <div class="flex-[1] p-1 flex items-center justify-center text-center">Skrot</div>
                         <div class="flex-[1] p-1 flex items-center justify-center text-center">Kod</div>
                         <div class="flex-[2] p-1 flex items-center justify-center text-center">Adres</div>
+                        <div class="flex-[1] p-1 flex items-center justify-center text-center">Kraj</div>
                         <div class="flex-[2] p-1 flex items-center justify-center text-center">Kierownik</div>
                     </div>
                     {% for laboratory in laboratories %}
@@ -26,6 +27,7 @@
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.short_name }}</div>
                             <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.code }}</div>
                             <div class="flex-[2] p-1 flex items-center justify-center text-center">{{ laboratory.address }}</div>
+                            <div class="flex-[1] p-1 flex items-center justify-center text-center">{{ laboratory.country_name }} ({{ laboratory.country_code }})</div>
                             <div class="flex-[2] p-1 flex items-center justify-center">
                                 {% with managers=laboratory.managers.all %}
                                     {% if managers %}

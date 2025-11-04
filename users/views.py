@@ -46,16 +46,26 @@ class ClientDashboardView(RoleDashboardView):
     required_role = "client"
     dashboard_title = "Panel klienta"
     dashboard_message = (
-        "Twórz i wysyłaj zlecenia. Sprawdzaj postep zlecen, otrzymuj raporty oraz komunikaty dotyczace realizacji."
+        "Tworz i wysylaj zlecenia. Sprawdzaj postep zlecen, otrzymuj raporty oraz komunikaty dotyczace realizacji."
     )
 
 
 class ManagerDashboardView(RoleDashboardView):
     required_role = "manager"
-    dashboard_title = "Panel kierownika"
+    dashboard_title = "Panel kierownika laboratorium"
     dashboard_message = (
-        "Planowanie pracy zespolu, kontrola nad zleceniami. Tworzenie, wykonywanie, edycja badań i sprawozdań"
+        "Planowanie pracy zespolu laboratorium, kontrola nad zleceniami. Tworzenie, wykonywanie, edycja badan i sprawozdan."
     )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        active_lab = getattr(user, "active_laboratory", None)
+        context["active_laboratory"] = active_lab
+        context["managed_laboratories"] = list(
+            user.managed_laboratories.order_by("name")
+        )
+        return context
 
 
 class TechnicianDashboardView(RoleDashboardView):

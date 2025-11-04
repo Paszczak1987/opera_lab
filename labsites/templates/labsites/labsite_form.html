@@ -1,63 +1,44 @@
 {% extends "users/dashboard_base.html" %}
+{% load static %}
 {% block dashboard_content %}
-    <style>
-        select.custom-scrollbar {
-            background-color: #0f172a;
-            color: #e2e8f0;
-            scrollbar-width: thin;
-            scrollbar-color: #0f766e #1f2937;
-        }
-
-        select.custom-scrollbar::-webkit-scrollbar {
-            width: 0.5rem;
-        }
-
-        select.custom-scrollbar::-webkit-scrollbar-track {
-            background-color: #1f2937;
-            border-radius: 9999px;
-        }
-
-        select.custom-scrollbar::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #0f766e 0%, #0f172a 100%);
-            border-radius: 9999px;
-        }
-
-        select.custom-scrollbar option {
-            background-color: #0f172a;
-            color: #e2e8f0;
-        }
-
-        option.option-assigned {
-            color: #64748b;
-        }
-    </style>
     <div class="workspace-card w-full max-w-3xl mx-auto space-y-6">
         <header class="space-y-1 text-center">
             <h1 class="text-2xl font-semibold text-gray-100">Nowe laboratorium</h1>
             <p class="text-sm text-gray-400">Uzupelnij dane laboratorium i przypisz personel techniczny oraz kierowniczy.</p>
         </header>
-        <form method="post" class="space-y-4">
+        <form method="post" class="space-y-6" id="labsite-form">
             {% csrf_token %}
             {% if form.non_field_errors %}
-                <div class="rounded bg-red-900/60 border border-red-500 text-red-100 px-4 py-3 text-sm">
+                <div class="rounded border border-rose-600 bg-rose-900/60 px-4 py-3 text-sm text-rose-100">
                     {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
                 </div>
             {% endif %}
             {% for field in form %}
-                <div class="space-y-1">
-                    <label for="{{ field.id_for_label }}"
-                           class="block text-sm font-medium text-gray-300">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.help_text %}<p class="text-xs text-gray-500">{{ field.help_text }}</p>{% endif %}
-                    {% for error in field.errors %}<p class="text-xs text-red-300">{{ error }}</p>{% endfor %}
-                </div>
+                {% if field.name == "technicians" or field.name == "managers" %}
+                    <div class="space-y-3">
+                        <label for="{{ field.id_for_label }}"
+                               class="block text-sm font-medium text-slate-200">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}<p class="text-xs text-slate-400">{{ field.help_text }}</p>{% endif %}
+                        {% for error in field.errors %}<p class="text-xs text-rose-400">{{ error }}</p>{% endfor %}
+                    </div>
+                {% else %}
+                    <div class="space-y-2">
+                        <label for="{{ field.id_for_label }}"
+                               class="block text-sm font-medium text-slate-200">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}<p class="text-xs text-slate-400">{{ field.help_text }}</p>{% endif %}
+                        {% for error in field.errors %}<p class="text-xs text-rose-400">{{ error }}</p>{% endfor %}
+                    </div>
+                {% endif %}
             {% endfor %}
             <div class="flex justify-end gap-3 pt-4">
                 <button type="submit"
-                        class="px-4 py-2 bg-blue-600 text-gray-200 hover:bg-blue-700 cursor-pointer transition">
+                        class="bg-blue-600 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-0">
                     Zapisz laboratorium
                 </button>
             </div>
         </form>
     </div>
+    <script src="{% static 'js/labsite_form.js' %}"></script>
 {% endblock dashboard_content %}
