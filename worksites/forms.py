@@ -8,21 +8,21 @@ from .models import Worksite
 class WorksiteForm(forms.ModelForm):
     class Meta:
         model = Worksite
-        fields = ["name", "short_name", "code", "office_address", "country_code", "clients"]
+        fields = ["name", "short_name", "code", "country_code", "office_address", "clients"]
         labels = {
             "name": "Pelna nazwa budowy",
             "short_name": "Skrocona nazwa",
             "code": "Kod budowy",
-            "office_address": "Adres biura budowy",
             "country_code": "Kraj",
+            "office_address": "Adres biura budowy",
             "clients": "Zamawiajacy",
         }
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Pelna nazwa budowy"}),
             "short_name": forms.TextInput(attrs={"placeholder": "Skrocona nazwa"}),
             "code": forms.TextInput(attrs={"placeholder": "Kod budowy"}),
-            "office_address": forms.TextInput(attrs={"placeholder": "Adres biura budowy"}),
             "country_code": forms.Select(),
+            "office_address": forms.TextInput(attrs={"placeholder": "Adres biura budowy"}),
             "clients": forms.SelectMultiple(),
         }
 
@@ -33,7 +33,6 @@ class WorksiteForm(forms.ModelForm):
 
         self.fields["country_code"].choices = country_choices()
         self.fields["country_code"].initial = self.instance.country_code or DEFAULT_COUNTRY_CODE
-        self.fields["country_code"].help_text = "Wybierz kraj, w ktorym znajduje sie budowa."
         self.fields["country_code"].widget.attrs.update(
             {
                 "class": (
@@ -46,7 +45,7 @@ class WorksiteForm(forms.ModelForm):
 
         self.fields["clients"].queryset = user_model.objects.filter(role="client").order_by("username")
         self.fields["clients"].required = False
-        self.fields["clients"].help_text = "Wybierz klientow powiazanych z budowa."
+        self.fields["clients"].help_text = "Wybierz zamawiającego dla budowy."
 
         if user and user.role == "client":
             self.fields["clients"].initial = [user]

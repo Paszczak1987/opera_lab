@@ -2,12 +2,14 @@
 {% block dashboard_content %}
     {% if laboratory %}
         <div class="workspace-card w-full space-y-4">
+            <!-- Card Header -->
             <header class="space-y-4 pb-2 md:flex md:items-end md:justify-between border-b border-gray-600">
                 <div class="space-y-1">
                     <h1 class="text-2xl font-semibold text-gray-100">{{ laboratory.name }}</h1>
                 </div>
             </header>
-            <section class="text-md font-semibold">
+            <!-- Displayed details section -->
+            <section class="text-md">
                 <p class="text-gray-400">
                     Nazwa skrotowa: <span class="text-gray-200">{{ laboratory.short_name }}</span>
                 </p>
@@ -15,12 +17,10 @@
                     Kod laboratorium: <span class="text-gray-200">{{ laboratory.code }}</span>
                 </p>
                 <p class="text-gray-400">
-                    Adres: <span class="text-gray-200">{{ laboratory.address }}</span>
-                </p>
-                <p class="text-gray-400">
-                    Kraj: <span class="text-gray-200">{{ laboratory.country_name }} ({{ laboratory.country_code }})</span>
+                    Adres: <span class="text-gray-200">{{ laboratory.country_name }} {{ laboratory.address }}</span>
                 </p>
             </section>
+            <!-- Assigned managers and technicians section -->
             <section class="workspace-table">
                 <div>
                     <p class="py-1 px-2 font-semibold border-b border-gray-600 bg-slate-800 text-teal-300">Kierownicy:</p>
@@ -57,12 +57,14 @@
                     {% endif %}
                 </div>
             </section>
+            <!-- Laboratory switcher - back to list button -->
             {% if request.user.role == "admin" %}
                 <div class="flex justify-end">
                     <a href="{% url 'labsites:list' %}?section=laboratories"
                        class="btn-outline">Powrot do listy</a>
                 </div>
             {% endif %}
+            <!-- Active laboratory switcher -->
             {% if laboratory_switch_form %}
                 <form method="post"
                       class="flex flex-col gap-2 md:flex-row md:items-center md:gap-3">

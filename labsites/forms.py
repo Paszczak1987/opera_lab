@@ -64,13 +64,13 @@ class LabSiteForm(forms.ModelForm):
 
     class Meta:
         model = LabSite
-        fields = ["name", "short_name", "code", "address", "country_code", "technicians", "managers"]
+        fields = ["name", "short_name", "code", "country_code", "address", "technicians", "managers"]
         labels = {
             'name': "Nazwa laboratorium",
             'short_name': "Skrocona nazwa",
             'code': "Kod laboratorium",
-            'address': "Adres",
             'country_code': "Kraj",
+            'address': "Adres",
             'technicians': "Technicy",
             'managers': "Kierownicy",
         }
@@ -78,8 +78,8 @@ class LabSiteForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"placeholder": "Pelna nazwa laboratorium"}),
             "short_name": forms.TextInput(attrs={"placeholder": "Skrocona nazwa"}),
             "code": forms.TextInput(attrs={"placeholder": "Kod laboratorium"}),
-            "address": forms.TextInput(attrs={"placeholder": "Adres"}),
             "country_code": forms.Select(attrs={}),
+            "address": forms.TextInput(attrs={"placeholder": "Adres"}),
         }
 
     def __init__(self, *args, **kwargs):
