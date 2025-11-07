@@ -45,7 +45,7 @@ class WorksiteForm(forms.ModelForm):
 
         self.fields["clients"].queryset = user_model.objects.filter(role="client").order_by("username")
         self.fields["clients"].required = False
-        self.fields["clients"].help_text = "Wybierz klientow powiazanych z budowa."
+        self.fields["clients"].help_text = "Wybierz zamawiającego dla budowy."
 
         if user and user.role == "client":
             self.fields["clients"].initial = [user]
