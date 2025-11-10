@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
+from config.countries import DEFAULT_COUNTRY_CODE, country_choices, country_name_for
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
@@ -38,8 +40,21 @@ class User(AbstractUser):
         related_name="active_managers",
         help_text="Ostatnio wybrane aktywne laboratorium kierownika.",
     )
+    country_code = models.CharField(
+        max_length=3,
+        choices=country_choices(),
+        default=DEFAULT_COUNTRY_CODE,
+        help_text="Kraj pochodzenia lub pracy uzytkownika.",
+    )
+    country_name = models.CharField(max_length=100, editable=False, blank=True)
 
     objects = UserManager()
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.get_role_display()})"
+
+    def save(self, *args, **kwargs):
+        if not self.country_code:
+            self.country_code = DEFAULT_COUNTRY_CODE
+        self.country_name = country_name_for(self.country_code)
+        super().save(*args, **kwargs)
